@@ -1,0 +1,3 @@
+Delete Appointment Error: Cannot delete or update a parent row: a foreign key constraint fails (`dental_clinic`.`treatment_plan_documents`, CONSTRAINT `treatment_plan_documents_ibfk_1` FOREIGN KEY (`treatment_plan_id`) REFERENCES `treatment_plans` (`id`))
+Delete Appointment Error: Cannot delete or update a parent row: a foreign key constraint fails (`dental_clinic`.`treatment_plan_documents`, CONSTRAINT `treatment_plan_documents_ibfk_1` FOREIGN KEY (`treatment_plan_id`) REFERENCES `treatment_plans` (`id`))
+Delete Appointment Error: Cannot delete or update a parent row: a foreign key constraint fails (`dental_clinic`.`treatment_plan_documents`, CONSTRAINT `treatment_plan_documents_ibfk_1` FOREIGN KEY (`treatment_plan_id`) REFERENCES `treatment_plans` (`id`))
