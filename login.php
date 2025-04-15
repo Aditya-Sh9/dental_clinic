@@ -13,48 +13,145 @@ if(isset($_SESSION['user'])) {
     <title>Staff Login - Toothly</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F5FDFF 0%, #E8F5E9 100%);
+        }
+        
+        .login-card {
+            box-shadow: 0 10px 25px -5px rgba(46, 125, 50, 0.1), 0 10px 10px -5px rgba(46, 125, 50, 0.04);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .login-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(46, 125, 50, 0.1), 0 10px 10px -5px rgba(46, 125, 50, 0.04);
+        }
+        
+        .btn-primary {
+            transition: all 0.3s ease;
+            background-image: linear-gradient(to right, #4CAF50, #2E7D32);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(46, 125, 50, 0.3);
+        }
+        
+        .input-field {
+            transition: all 0.3s ease;
+            border: 1px solid #E2E8F0;
+        }
+        
+        .input-field:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center">
-    <div class="max-w-md w-full mx-4 bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="bg-blue-600 py-4 px-6">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-tooth text-white text-2xl"></i>
-                <h1 class="text-xl font-bold text-white">Staff Login</h1>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="login-card max-w-md w-full bg-white">
+        <!-- Header with logo and title -->
+        <div class="bg-gradient-to-r from-green-600 to-green-700 py-6 px-8 text-center">
+            <div class="flex items-center justify-center space-x-3">
+                <div class="bg-white p-2 rounded-full">
+                    <i class="fas fa-tooth text-green-600 text-2xl"></i>
+                </div>
+                <h1 class="text-2xl font-bold text-white">Toothly Clinic</h1>
             </div>
+            <p class="mt-2 text-green-100">Staff Login Portal</p>
         </div>
         
-        <div class="p-6">
+        <!-- Form section -->
+        <div class="p-8">
             <?php if(isset($_GET['error'])): ?>
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                    Invalid email or password
+                <div class="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded-r-lg flex items-start">
+                    <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                    <div>
+                        <p class="font-medium">Login Failed</p>
+                        <p class="text-sm">Invalid email or password</p>
+                    </div>
                 </div>
             <?php endif; ?>
             
             <?php if(isset($_GET['signup'])): ?>
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                    Registration successful! Please login.
+                <div class="bg-green-50 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded-r-lg flex items-start">
+                    <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                    <div>
+                        <p class="font-medium">Registration Successful!</p>
+                        <p class="text-sm">Please login with your credentials</p>
+                    </div>
                 </div>
             <?php endif; ?>
             
-            <form action="auth.php" method="POST">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-medium mb-2" for="email">Email</label>
-                    <input type="email" name="email" id="email" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            <form action="auth.php" method="POST" class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="email">
+                        <i class="fas fa-envelope text-green-600 mr-1"></i> Email Address
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                        <input type="email" name="email" id="email" 
+                               class="input-field w-full pl-10 pr-3 py-3 rounded-lg focus:outline-none" 
+                               placeholder="your@email.com" required>
+                    </div>
                 </div>
                 
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-medium mb-2" for="password">Password</label>
-                    <input type="password" name="password" id="password" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2" for="password">
+                        <i class="fas fa-lock text-green-600 mr-1"></i> Password
+                    </label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-key text-gray-400"></i>
+                        </div>
+                        <input type="password" name="password" id="password" 
+                               class="input-field w-full pl-10 pr-3 py-3 rounded-lg focus:outline-none" 
+                               placeholder="••••••••" required>
+                    </div>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300">
-                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                            Remember me
+                        </label>
+                    </div>
+                    <!-- <div class="text-sm">
+                        <a href="forgot-password.php" class="font-medium text-green-600 hover:text-green-500">
+                            Forgot password?
+                        </a>
+                    </div> -->
+                </div>
+                
+                <button type="submit" class="btn-primary w-full text-white font-semibold py-3 px-4 rounded-lg shadow-md flex items-center justify-center">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login to Dashboard
                 </button>
             </form>
             
-            <div class="mt-4 text-center">
-                <p class="text-gray-600">Don't have an account? <a href="signup.php" class="text-blue-600 hover:text-blue-800 font-medium">Sign up here</a></p>
+            <div class="mt-6 text-center">
+                <p class="text-gray-600 text-sm">
+                    New to Toothly? 
+                    <a href="signup.php" class="font-medium text-green-600 hover:text-green-500">
+                        Create an account
+                    </a>
+                </p>
             </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="bg-gray-50 px-8 py-4 text-center border-t border-gray-200">
+            <p class="text-xs text-gray-500">
+                &copy; <?= date('Y') ?> Toothly Clinic. All rights reserved.
+            </p>
         </div>
     </div>
 </body>

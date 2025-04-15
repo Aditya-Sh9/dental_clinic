@@ -66,15 +66,46 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Edit Appointment - Toothly</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+        .bg-primary {
+            background-color: #4CAF50;
+        }
+        .bg-primary-dark {
+            background-color: #2E7D32;
+        }
+        .text-primary {
+            color: #4CAF50;
+        }
+        .text-primary-dark {
+            color: #2E7D32;
+        }
+        .border-primary {
+            border-color: #4CAF50;
+        }
+        .hover\:bg-primary:hover {
+            background-color: #4CAF50;
+        }
+        .hover\:bg-primary-dark:hover {
+            background-color: #2E7D32;
+        }
+        .focus\:ring-primary:focus {
+            --tw-ring-color: #4CAF50;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-50">
     <div class="flex min-h-screen">
         <?php include('sidebar.php'); ?>
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Edit Appointment</h1>
-                <a href="appointments.php" class="text-blue-600 hover:text-blue-800 font-medium">
+                <h1 class="text-2xl font-bold text-primary-dark">Edit Appointment</h1>
+                <a href="appointments.php" class="text-primary hover:text-primary-dark font-medium flex items-center">
                     <i class="fas fa-arrow-left mr-1"></i> Back to Appointments
                 </a>
             </div>
@@ -91,7 +122,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="doctor_id">Doctor</label>
-                    <select name="doctor_id" id="doctor_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    <select name="doctor_id" id="doctor_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" required>
                         <option value="">Select Doctor</option>
                         <?php 
                         $doctors = $conn->query("SELECT * FROM doctors");
@@ -106,7 +137,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient</label>
-                    <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" required>
                         <option value="">Select Patient</option>
                         <?php foreach($patients as $patient): ?>
                         <option value="<?php echo $patient['id']; ?>" <?php echo $patient['id'] == $appointment['patient_id'] ? 'selected' : ''; ?>>
@@ -118,22 +149,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment_date">Date</label>
-                    <input type="date" name="appointment_date" id="appointment_date" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    <input type="date" name="appointment_date" id="appointment_date" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                            value="<?php echo htmlspecialchars($appointment['appointment_date']); ?>" required>
                 </div>
                 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment_time">Time</label>
-                    <input type="time" name="appointment_time" id="appointment_time" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    <input type="time" name="appointment_time" id="appointment_time" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                            value="<?php echo htmlspecialchars($appointment['appointment_time']); ?>" required>
                 </div>
                 
                 <div class="mb-6">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="reason">Reason</label>
-                    <textarea name="reason" id="reason" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"><?php echo htmlspecialchars($appointment['reason']); ?></textarea>
+                    <textarea name="reason" id="reason" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"><?php echo htmlspecialchars($appointment['reason']); ?></textarea>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
                     <i class="fas fa-save mr-2"></i> Save Changes
                 </button>
             </form>

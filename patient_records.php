@@ -29,22 +29,50 @@ if($patient_id <= 0) {
         <title>Select Patient - Toothly</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: #F5F5F5;
+            }
+            .bg-primary {
+                background-color: #4CAF50;
+            }
+            .bg-primary-dark {
+                background-color: #2E7D32;
+            }
+            .text-primary {
+                color: #4CAF50;
+            }
+            .text-primary-dark {
+                color: #2E7D32;
+            }
+            .border-primary {
+                border-color: #4CAF50;
+            }
+            .hover\:bg-primary:hover {
+                background-color: #4CAF50;
+            }
+            .hover\:bg-primary-dark:hover {
+                background-color: #2E7D32;
+            }
+        </style>
     </head>
-    <body class="bg-gray-100">
+    <body class="bg-gray-50">
         <div class="flex min-h-screen">
             <?php include('sidebar.php'); ?>
             
             <div class="flex-1 p-8">
                 <div class="flex justify-between items-center mb-8">
-                    <h1 class="text-2xl font-bold text-blue-800">Select Patient</h1>
+                    <h1 class="text-2xl font-bold text-green-900">Select Patient</h1>
                     <form method="GET" class="flex items-center space-x-4">
                         <div class="relative">
                             <input type="text" name="search" placeholder="Search patients..." 
-                                   class="w-full px-4 py-2 border rounded-lg pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   class="w-full px-4 py-2 border rounded-lg pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
                                    value="<?php echo htmlspecialchars($search); ?>">
                             <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
                         </div>
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
                             Search
                         </button>
                     </form>
@@ -54,9 +82,9 @@ if($patient_id <= 0) {
                     <?php if($patients_result->num_rows > 0): ?>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
                             <?php while($patient = $patients_result->fetch_assoc()): ?>
-                                <a href="patient_records.php?id=<?= $patient['id'] ?>" class="border rounded-lg p-4 hover:bg-blue-50 transition">
+                                <a href="patient_records.php?id=<?= $patient['id'] ?>" class="border rounded-lg p-4 hover:bg-green-50 transition">
                                     <div class="flex items-center space-x-4">
-                                        <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xl font-bold">
+                                        <div class="h-12 w-12 rounded-full bg-green-600 bg-opacity-10 flex items-center justify-center text-green-700 text-xl font-bold">
                                             <?= substr($patient['name'], 0, 1) ?>
                                         </div>
                                         <div>
@@ -151,6 +179,11 @@ $insurance = $stmt->get_result();
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
         .tab-content {
             display: none;
         }
@@ -158,24 +191,45 @@ $insurance = $stmt->get_result();
             display: block;
         }
         .tab-button.active {
-            border-bottom: 3px solid #3b82f6;
-            color: #3b82f6;
+            border-bottom: 3px solid #4CAF50;
+            color: #2E7D32;
             font-weight: 600;
+        }
+        .bg-primary {
+            background-color: #4CAF50;
+        }
+        .bg-primary-dark {
+            background-color: #2E7D32;
+        }
+        .text-primary {
+            color: #4CAF50;
+        }
+        .text-primary-dark {
+            color: #2E7D32;
+        }
+        .border-primary {
+            border-color: #4CAF50;
+        }
+        .hover\:bg-primary:hover {
+            background-color: #4CAF50;
+        }
+        .hover\:bg-primary-dark:hover {
+            background-color: #2E7D32;
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-50">
     <div class="flex min-h-screen">
         <?php include('sidebar.php'); ?>
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-6">
                 <div>
-                    <h1 class="text-2xl font-bold text-blue-800">Patient Records</h1>
+                    <h1 class="text-2xl font-bold text-green-900">Patient Records</h1>
                     <nav class="flex" aria-label="Breadcrumb">
                         <ol class="inline-flex items-center space-x-1 md:space-x-3">
                             <li class="inline-flex items-center">
-                                <a href="patients.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600">
+                                <a href="patients.php" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary">
                                     Patients
                                 </a>
                             </li>
@@ -192,7 +246,7 @@ $insurance = $stmt->get_result();
                     <a href="patients.php" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
                         <i class="fas fa-arrow-left mr-2"></i> Back to Patients
                     </a>
-                    <a href="edit_patient.php?id=<?= $patient_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
+                    <a href="edit_patient.php?id=<?= $patient_id ?>" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
                         <i class="fas fa-edit mr-2"></i> Edit Patient
                     </a>
                 </div>
@@ -202,7 +256,7 @@ $insurance = $stmt->get_result();
             <div class="bg-white rounded-xl shadow-md p-6 mb-8">
                 <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
                     <div class="flex-shrink-0">
-                        <div class="h-20 w-20 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-3xl font-bold">
+                        <div class="h-20 w-20 rounded-full bg-green-600 bg-opacity-10 flex items-center justify-center text-primary text-3xl font-bold">
                             <?= substr($patient['name'], 0, 1) ?>
                         </div>
                     </div>
@@ -212,12 +266,12 @@ $insurance = $stmt->get_result();
                             <p class="text-gray-600"><?= $patient['gender'] ? htmlspecialchars($patient['gender']) : '--' ?></p>
                         </div>
                         <div>
-                            <p class="text-gray-600"><i class="fas fa-birthday-cake mr-2 text-blue-500"></i> <?= $patient['dob'] ? date('M j, Y', strtotime($patient['dob'])) : '--' ?></p>
-                            <p class="text-gray-600"><i class="fas fa-phone mr-2 text-blue-500"></i> <?= $patient['phone'] ? htmlspecialchars($patient['phone']) : '--' ?></p>
+                            <p class="text-gray-600"><i class="fas fa-birthday-cake mr-2 text-primary"></i> <?= $patient['dob'] ? date('M j, Y', strtotime($patient['dob'])) : '--' ?></p>
+                            <p class="text-gray-600"><i class="fas fa-phone mr-2 text-primary"></i> <?= $patient['phone'] ? htmlspecialchars($patient['phone']) : '--' ?></p>
                         </div>
                         <div>
-                            <p class="text-gray-600"><i class="fas fa-envelope mr-2 text-blue-500"></i> <?= $patient['email'] ? htmlspecialchars($patient['email']) : '--' ?></p>
-                            <p class="text-gray-600"><i class="fas fa-map-marker-alt mr-2 text-blue-500"></i> <?= $patient['address'] ? htmlspecialchars($patient['address']) : '--' ?></p>
+                            <p class="text-gray-600"><i class="fas fa-envelope mr-2 text-primary"></i> <?= $patient['email'] ? htmlspecialchars($patient['email']) : '--' ?></p>
+                            <p class="text-gray-600"><i class="fas fa-map-marker-alt mr-2 text-primary"></i> <?= $patient['address'] ? htmlspecialchars($patient['address']) : '--' ?></p>
                         </div>
                     </div>
                 </div>
@@ -245,17 +299,17 @@ $insurance = $stmt->get_result();
             <div class="tab-content active" id="appointments">
                 <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                     <div class="p-6 flex justify-between items-center">
-                        <h2 class="text-xl font-semibold text-blue-800">Appointment History</h2>
+                        <h2 class="text-xl font-semibold text-primary-dark">Appointment History</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-blue-50">
+                            <thead class="bg-green-50">
                                 <tr>
-                                    <th class="p-4 text-left text-blue-800">Date</th>
-                                    <th class="p-4 text-left text-blue-800">Time</th>
-                                    <th class="p-4 text-left text-blue-800">Reason</th>
-                                    <th class="p-4 text-left text-blue-800">Status</th>
-                                    <th class="p-4 text-left text-blue-800">Actions</th>
+                                    <th class="p-4 text-left text-primary-dark">Date</th>
+                                    <th class="p-4 text-left text-primary-dark">Time</th>
+                                    <th class="p-4 text-left text-primary-dark">Reason</th>
+                                    <th class="p-4 text-left text-primary-dark">Status</th>
+                                    <th class="p-4 text-left text-primary-dark">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -263,18 +317,18 @@ $insurance = $stmt->get_result();
                                     <?php while($appt = $appointments->fetch_assoc()): 
                                         $status = new DateTime($appt['appointment_date'] . ' ' . $appt['appointment_time']) < new DateTime() ? 'Completed' : 'Upcoming';
                                     ?>
-                                    <tr class="hover:bg-blue-50 transition">
+                                    <tr class="hover:bg-green-50 transition">
                                         <td class="p-4"><?= date('M j, Y', strtotime($appt['appointment_date'])) ?></td>
                                         <td class="p-4"><?= date('g:i A', strtotime($appt['appointment_time'])) ?></td>
                                         <td class="p-4"><?= $appt['reason'] ? htmlspecialchars($appt['reason']) : '--' ?></td>
                                         <td class="p-4">
-                                            <span class="px-3 py-1 rounded-full text-xs font-medium <?= $status === 'Completed' ? 'bg-gray-100 text-gray-800' : 'bg-blue-100 text-blue-800' ?>">
+                                            <span class="px-3 py-1 rounded-full text-xs font-medium <?= $status === 'Completed' ? 'bg-gray-100 text-gray-800' : 'bg-primary bg-opacity-10 text-primary-dark' ?>">
                                                 <?= $status ?>
                                             </span>
                                         </td>
                                         <td class="p-4">
                                             <div class="flex space-x-2">
-                                                <a href="edit_appointment.php?id=<?= $appt['id'] ?>" class="text-blue-600 hover:text-blue-800 px-2 py-1 rounded transition">
+                                                <a href="edit_appointment.php?id=<?= $appt['id'] ?>" class="text-primary hover:text-primary-dark px-2 py-1 rounded transition">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <a href="delete_appointment.php?id=<?= $appt['id'] ?>" class="text-red-600 hover:text-red-800 px-2 py-1 rounded transition" onclick="return confirm('Are you sure you want to delete this appointment?');">
@@ -298,24 +352,24 @@ $insurance = $stmt->get_result();
             <div class="tab-content" id="treatment-plans">
                 <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                     <div class="p-6 flex justify-between items-center">
-                        <h2 class="text-xl font-semibold text-blue-800">Treatment Plans</h2>
+                        <h2 class="text-xl font-semibold text-primary-dark">Treatment Plans</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-blue-50">
+                            <thead class="bg-green-50">
                                 <tr>
-                                    <th class="p-4 text-left text-blue-800">Created</th>
-                                    <th class="p-4 text-left text-blue-800">Appointment Date</th>
-                                    <th class="p-4 text-left text-blue-800">Title</th>
-                                    <th class="p-4 text-left text-blue-800">Doctor</th>
-                                    <th class="p-4 text-left text-blue-800">Status</th>
-                                    <th class="p-4 text-left text-blue-800">Description</th>
+                                    <th class="p-4 text-left text-primary-dark">Created</th>
+                                    <th class="p-4 text-left text-primary-dark">Appointment Date</th>
+                                    <th class="p-4 text-left text-primary-dark">Title</th>
+                                    <th class="p-4 text-left text-primary-dark">Doctor</th>
+                                    <th class="p-4 text-left text-primary-dark">Status</th>
+                                    <th class="p-4 text-left text-primary-dark">Description</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
                                 <?php if($treatment_plans->num_rows > 0): ?>
                                     <?php while($plan = $treatment_plans->fetch_assoc()): ?>
-                                    <tr class="hover:bg-blue-50 transition">
+                                    <tr class="hover:bg-green-50 transition">
                                         <td class="p-4"><?= date('M j, Y', strtotime($plan['created_at'])) ?></td>
                                         <td class="p-4"><?= $plan['appointment_date'] ? date('M j, Y', strtotime($plan['appointment_date'])) : '--' ?></td>
                                         <td class="p-4"><?= htmlspecialchars($plan['title']) ?></td>
@@ -323,7 +377,7 @@ $insurance = $stmt->get_result();
                                         <td class="p-4">
                                             <span class="px-3 py-1 rounded-full text-xs font-medium 
                                                 <?= $plan['status'] === 'Completed' ? 'bg-green-100 text-green-800' : 
-                                                   ($plan['status'] === 'In Progress' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800') ?>">
+                                                   ($plan['status'] === 'In Progress' ? 'bg-primary bg-opacity-10 text-primary-dark' : 'bg-gray-100 text-gray-800') ?>">
                                                 <?= htmlspecialchars($plan['status']) ?>
                                             </span>
                                         </td>
@@ -344,17 +398,17 @@ $insurance = $stmt->get_result();
             <div class="tab-content" id="xrays">
                 <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                     <div class="p-6 flex justify-between items-center">
-                        <h2 class="text-xl font-semibold text-blue-800">X-Ray Records</h2>
+                        <h2 class="text-xl font-semibold text-primary-dark">X-Ray Records</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full">
-                            <thead class="bg-blue-50">
+                            <thead class="bg-green-50">
                                 <tr>
-                                    <th class="p-4 text-left text-blue-800">Taken Date</th>
-                                    <th class="p-4 text-left text-blue-800">Title</th>
-                                    <th class="p-4 text-left text-blue-800">Related Treatment Plan</th>
-                                    <th class="p-4 text-left text-blue-800">Description</th>
-                                    <th class="p-4 text-left text-blue-800">View</th>
+                                    <th class="p-4 text-left text-primary-dark">Taken Date</th>
+                                    <th class="p-4 text-left text-primary-dark">Title</th>
+                                    <th class="p-4 text-left text-primary-dark">Related Treatment Plan</th>
+                                    <th class="p-4 text-left text-primary-dark">Description</th>
+                                    <th class="p-4 text-left text-primary-dark">View</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200">
@@ -365,14 +419,14 @@ $insurance = $stmt->get_result();
                                         if($xray['id']): // Check if we have a valid xray record
                                             $has_records = true;
                                 ?>
-                                <tr class="hover:bg-blue-50 transition">
+                                <tr class="hover:bg-green-50 transition">
                                     <td class="p-4"><?= date('M j, Y', strtotime($xray['taken_date'])) ?></td>
                                     <td class="p-4"><?= htmlspecialchars($xray['title']) ?></td>
                                     <td class="p-4"><?= $xray['treatment_plan_title'] ? htmlspecialchars($xray['treatment_plan_title']) : '--' ?></td>
                                     <td class="p-4"><?= $xray['description'] ? htmlspecialchars($xray['description']) : '--' ?></td>
                                     <td class="p-4">
                                         <?php if($xray['image_id']): ?>
-                                        <a href="view_xray.php?id=<?= $xray['id'] ?>" class="text-blue-600 hover:text-blue-800 px-2 py-1 rounded transition">
+                                        <a href="view_xray.php?id=<?= $xray['id'] ?>" class="text-primary hover:text-primary-dark px-2 py-1 rounded transition">
                                             <i class="fas fa-eye"></i> View
                                         </a>
                                         <?php else: ?>
@@ -400,7 +454,7 @@ $insurance = $stmt->get_result();
             <div class="tab-content" id="insurance">
                 <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
                     <div class="p-6">
-                        <h2 class="text-xl font-semibold text-blue-800">Insurance Information</h2>
+                        <h2 class="text-xl font-semibold text-primary-dark">Insurance Information</h2>
                     </div>
                     <div class="overflow-x-auto">
                         <?php if($insurance->num_rows > 0): 
@@ -448,11 +502,6 @@ $insurance = $stmt->get_result();
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="p-6 border-t border-gray-200">
-                                <a href="edit_insurance.php?patient_id=<?= $patient_id ?>" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center w-max">
-                                    <i class="fas fa-edit mr-2"></i> Edit Insurance
-                                </a>
-                            </div> -->
                         <?php else: ?>
                             <div class="p-6 text-center">
                                 <p class="text-gray-500 mb-4">No insurance information found</p>
