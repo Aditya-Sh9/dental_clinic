@@ -37,9 +37,58 @@ $recalls = $conn->query($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recall Management - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+    </style>
+    <style>
+        .filter-btn {
+            transition: all 0.2s;
+        }
+        .filter-btn.active {
+            background-color: #2E7D32;
+            color: white;
+        }
+        .filter-btn:hover:not(.active) {
+            background-color: #E8F5E9;
+        }
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .status-pending {
+            background-color: #E3F2FD;
+            color: #1976D2;
+        }
+        .status-completed {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+        .status-cancelled {
+            background-color: #EFEBE9;
+            color: #5D4037;
+        }
+        .overdue-row {
+            background-color: #FFEBEE;
+        }
+        .overdue-text {
+            color: #C62828;
+            font-weight: 500;
+        }
+        .overdue-badge {
+            background-color: #FFCDD2;
+            color: #C62828;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -47,23 +96,23 @@ $recalls = $conn->query($query);
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Recall Management</h1>
+                <h1 class="text-2xl font-bold text-green-900">Recall Management</h1>
                 <div class="flex space-x-4">
                     <div class="flex space-x-2">
-                        <a href="?filter=upcoming" class="<?= $filter === 'upcoming' ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800' ?> hover:bg-blue-700 hover:text-white font-medium py-2 px-4 rounded-lg transition">
+                        <a href="?filter=upcoming" class="filter-btn <?= $filter === 'upcoming' ? 'active' : '' ?> font-medium py-2 px-4 rounded-lg text-green-700">
                             Upcoming
                         </a>
-                        <a href="?filter=overdue" class="<?= $filter === 'overdue' ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800' ?> hover:bg-blue-700 hover:text-white font-medium py-2 px-4 rounded-lg transition">
+                        <a href="?filter=overdue" class="filter-btn <?= $filter === 'overdue' ? 'active' : '' ?> font-medium py-2 px-4 rounded-lg text-green-700">
                             Overdue
                         </a>
-                        <a href="?filter=completed" class="<?= $filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800' ?> hover:bg-blue-700 hover:text-white font-medium py-2 px-4 rounded-lg transition">
+                        <a href="?filter=completed" class="filter-btn <?= $filter === 'completed' ? 'active' : '' ?> font-medium py-2 px-4 rounded-lg text-green-700">
                             Completed
                         </a>
                         <a href="recalls.php" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition">
                             All Recalls
                         </a>
                     </div>
-                    <a href="add_recall.php" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
+                    <a href="add_recall.php" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
                         <i class="fas fa-plus mr-2"></i> New Recall
                     </a>
                 </div>
@@ -84,14 +133,14 @@ $recalls = $conn->query($query);
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-blue-50">
+                        <thead class="bg-green-50">
                             <tr>
-                                <th class="p-4 text-left text-blue-800">Patient</th>
-                                <th class="p-4 text-left text-blue-800">Recall Type</th>
-                                <th class="p-4 text-left text-blue-800">Due Date</th>
-                                <th class="p-4 text-left text-blue-800">Status</th>
-                                <th class="p-4 text-left text-blue-800">Contact Info</th>
-                                <th class="p-4 text-left text-blue-800">Actions</th>
+                                <th class="p-4 text-left text-green-900">Patient</th>
+                                <th class="p-4 text-left text-green-900">Recall Type</th>
+                                <th class="p-4 text-left text-green-900">Due Date</th>
+                                <th class="p-4 text-left text-green-900">Status</th>
+                                <th class="p-4 text-left text-green-900">Contact Info</th>
+                                <th class="p-4 text-left text-green-900">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -99,32 +148,30 @@ $recalls = $conn->query($query);
                                 <?php while($recall = $recalls->fetch_assoc()): 
                                     $isOverdue = strtotime($recall['due_date']) < strtotime('today') && $recall['status'] === 'pending';
                                 ?>
-                                <tr class="hover:bg-blue-50 <?= $isOverdue ? 'bg-red-50' : '' ?>">
+                                <tr class="hover:bg-green-50 <?= $isOverdue ? 'overdue-row' : '' ?>">
                                     <td class="p-4"><?= htmlspecialchars($recall['patient_name']) ?></td>
                                     <td class="p-4"><?= htmlspecialchars($recall['recall_type']) ?></td>
-                                    <td class="p-4 <?= $isOverdue ? 'text-red-600 font-semibold' : '' ?>">
+                                    <td class="p-4 <?= $isOverdue ? 'overdue-text' : '' ?>">
                                         <?= date('M j, Y', strtotime($recall['due_date'])) ?>
                                         <?php if($isOverdue): ?>
-                                            <span class="ml-2 px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Overdue</span>
+                                            <span class="ml-2 px-2 py-1 overdue-badge rounded-full text-xs">Overdue</span>
                                         <?php endif; ?>
                                     </td>
                                     <td class="p-4">
-                                        <span class="px-3 py-1 rounded-full text-xs font-medium 
-                                            <?= $recall['status'] === 'completed' ? 'bg-green-100 text-green-800' : 
-                                               ($recall['status'] === 'cancelled' ? 'bg-gray-100 text-gray-800' : 'bg-blue-100 text-blue-800') ?>">
+                                        <span class="status-badge <?= 'status-' . $recall['status'] ?>">
                                             <?= ucfirst($recall['status']) ?>
                                         </span>
                                     </td>
                                     <td class="p-4">
                                         <div class="text-sm">
                                             <div><?= htmlspecialchars($recall['phone']) ?></div>
-                                            <div class="text-blue-600"><?= htmlspecialchars($recall['email']) ?></div>
+                                            <div class="text-green-600"><?= htmlspecialchars($recall['email']) ?></div>
                                         </div>
                                     </td>
                                     <td class="p-4">
                                         <div class="flex space-x-2">
                                             <a href="edit_recall.php?id=<?= $recall['id'] ?>" 
-                                               class="text-blue-600 hover:text-blue-800 px-2 py-1 rounded transition">
+                                               class="text-green-600 hover:text-green-800 px-2 py-1 rounded transition">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a href="delete_recall.php?id=<?= $recall['id'] ?>" 
@@ -171,7 +218,7 @@ $recalls = $conn->query($query);
                     text: "You won't be able to revert this!",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#2563eb',
+                    confirmButtonColor: '#2E7D32',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!',
                     cancelButtonText: 'Cancel',

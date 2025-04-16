@@ -163,23 +163,56 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Insurance - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom green shades */
+        .bg-green-100 {
+            background-color: #E8F5E9;
+        }
+        .text-green-800 {
+            color: #2E7D32;
+        }
+        .border-green-600 {
+            border-color: #4CAF50;
+        }
+        .text-green-600 {
+            color: #4CAF50;
+        }
+        .bg-green-600 {
+            background-color: #4CAF50;
+        }
+        .bg-green-700 {
+            background-color: #2E7D32;
+        }
+        .text-green-900 {
+            color: #1B5E20;
+        }
+        .text-green-200 {
+            color: #C8E6C9;
+        }
+        
         /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(219, 234, 254, 0.5);
+            background: rgba(76, 175, 80, 0.1);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(59, 130, 246, 0.7);
+            background: rgba(46, 125, 50, 0.7);
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(37, 99, 235, 0.9);
+            background: rgba(46, 125, 50, 0.9);
         }
         
         /* Smooth scrolling */
@@ -200,8 +233,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Edit Insurance Policy</h1>
-                <a href="view_insurance.php?id=<?= $insurance_id ?>" class="text-blue-600 hover:text-blue-800 font-medium">
+                <h1 class="text-2xl font-bold text-green-900">Edit Insurance Policy</h1>
+                <a href="view_insurance.php?id=<?= $insurance_id ?>" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                     <i class="fas fa-arrow-left mr-1"></i> Back to Policy
                 </a>
             </div>
@@ -224,11 +257,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             <?php endif; ?>
             
-            <form method="POST" enctype="multipart/form-data" class="max-w-3xl bg-white p-6 rounded-xl shadow-md">
+            <form method="POST" enctype="multipart/form-data" class="max-w-3xl bg-white p-6 rounded-xl shadow-md border-l-4 border-green-600">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient *</label>
-                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="">Select Patient</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>" <?= $patient['id'] == $insurance['patient_id'] ? 'selected' : '' ?>>
@@ -240,7 +273,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="provider_id">Provider *</label>
-                        <select name="provider_id" id="provider_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="provider_id" id="provider_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="">Select Provider</option>
                             <?php while($provider = $providers->fetch_assoc()): ?>
                             <option value="<?= $provider['id'] ?>" <?= $provider['id'] == $insurance['provider_id'] ? 'selected' : '' ?>>
@@ -253,71 +286,71 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="policy_number">Policy Number *</label>
                         <input type="text" name="policy_number" id="policy_number" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= htmlspecialchars($insurance['policy_number']) ?>" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="group_number">Group Number</label>
                         <input type="text" name="group_number" id="group_number" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= htmlspecialchars($insurance['group_number']) ?>">
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="coverage_start">Coverage Start *</label>
                         <input type="date" name="coverage_start" id="coverage_start" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= $insurance['coverage_start'] ?>" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="coverage_end">Coverage End *</label>
                         <input type="date" name="coverage_end" id="coverage_end" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= $insurance['coverage_end'] ?>" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="annual_max">Annual Max ($) *</label>
                         <input type="number" step="0.01" name="annual_max" id="annual_max" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= $insurance['annual_max'] ?>" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="remaining_balance">Remaining Balance ($) *</label>
                         <input type="number" step="0.01" name="remaining_balance" id="remaining_balance" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= $insurance['remaining_balance'] ?>" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="deductible">Deductible ($) *</label>
                         <input type="number" step="0.01" name="deductible" id="deductible" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= $insurance['deductible'] ?>" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="deductible_met">Deductible Met ($) *</label>
                         <input type="number" step="0.01" name="deductible_met" id="deductible_met" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= $insurance['deductible_met'] ?>" required>
                     </div>
                 </div>
                 
                 <!-- Documents Section -->
                 <div class="mt-8 border-t pt-6">
-                    <h2 class="text-xl font-semibold text-blue-800 mb-4">Policy Documents</h2>
+                    <h2 class="text-xl font-semibold text-green-900 mb-4">Policy Documents</h2>
                     
                     <!-- Document Upload Form -->
-                    <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                        <h3 class="text-lg font-medium text-blue-800 mb-3">Upload New Document</h3>
+                    <div class="bg-green-50 p-4 rounded-lg mb-6">
+                        <h3 class="text-lg font-medium text-green-900 mb-3">Upload New Document</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-gray-700 text-sm font-medium mb-2" for="document_type">Document Type *</label>
-                                <select name="document_type" id="document_type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <select name="document_type" id="document_type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                                     <option value="">Select Type</option>
                                     <option value="insurance_card">Insurance Card</option>
                                     <option value="claim_form">Claim Form</option>
@@ -327,7 +360,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                             <div>
                                 <label class="block text-gray-700 text-sm font-medium mb-2" for="new_document">Document *</label>
-                                <input type="file" name="new_document" id="new_document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                                <input type="file" name="new_document" id="new_document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                                 <p class="text-xs text-gray-500 mt-1">Allowed file types: PDF, JPG, PNG (Max 5MB)</p>
                             </div>
                         </div>
@@ -336,7 +369,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Existing Documents List -->
                     <?php if($documents->num_rows > 0): ?>
                         <div class="space-y-3">
-                            <h3 class="text-lg font-medium text-blue-800 mb-2">Existing Documents</h3>
+                            <h3 class="text-lg font-medium text-green-900 mb-2">Existing Documents</h3>
                             <?php while($doc = $documents->fetch_assoc()): 
                                 $icon = [
                                     'insurance_card' => 'fa-id-card',
@@ -345,16 +378,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     'other' => 'fa-file'
                                 ][$doc['document_type']];
                             ?>
-                            <div class="flex items-center justify-between bg-white p-3 border rounded-lg">
+                            <div class="flex items-center justify-between bg-white p-3 border rounded-lg hover:bg-green-50 transition">
                                 <div class="flex items-center">
-                                    <i class="fas <?= $icon ?> text-blue-600 text-xl mr-3"></i>
+                                    <i class="fas <?= $icon ?> text-green-600 text-xl mr-3"></i>
                                     <div>
-                                        <p class="font-medium"><?= htmlspecialchars($doc['file_name']) ?></p>
+                                        <p class="font-medium text-green-900"><?= htmlspecialchars($doc['file_name']) ?></p>
                                         <p class="text-xs text-gray-500"><?= ucfirst(str_replace('_', ' ', $doc['document_type'])) ?> - <?= date('m/d/Y H:i', strtotime($doc['upload_date'])) ?></p>
                                     </div>
                                 </div>
                                 <div class="flex space-x-2">
-                                    <a href="<?= $doc['file_path'] ?>" target="_blank" class="text-blue-600 hover:text-blue-800 p-2">
+                                    <a href="<?= $doc['file_path'] ?>" target="_blank" class="text-green-600 hover:text-green-800 p-2">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     <a href="<?= $doc['file_path'] ?>" download class="text-green-600 hover:text-green-800 p-2">
@@ -374,7 +407,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <?php endif; ?>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
                     <i class="fas fa-save mr-2"></i> Update Insurance Policy
                 </button>
             </form>

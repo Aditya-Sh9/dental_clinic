@@ -72,8 +72,47 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Claim - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom green shades */
+        .bg-green-100 {
+            background-color: #E8F5E9;
+        }
+        .text-green-800 {
+            color: #2E7D32;
+        }
+        .border-green-600 {
+            border-color: #4CAF50;
+        }
+        .text-green-600 {
+            color: #4CAF50;
+        }
+        .bg-green-600 {
+            background-color: #4CAF50;
+        }
+        .bg-green-700 {
+            background-color: #2E7D32;
+        }
+        .text-green-900 {
+            color: #1B5E20;
+        }
+        .text-green-200 {
+            color: #C8E6C9;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -81,8 +120,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">New Insurance Claim</h1>
-                <a href="insurance.php" class="text-blue-600 hover:text-blue-800 font-medium">
+                <h1 class="text-2xl font-bold text-green-900">New Insurance Claim</h1>
+                <a href="insurance.php" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                     <i class="fas fa-arrow-left mr-1"></i> Back to Insurance
                 </a>
             </div>
@@ -93,11 +132,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             <?php endif; ?>
             
-            <form method="POST" enctype="multipart/form-data" class="max-w-3xl bg-white p-6 rounded-xl shadow-md">
+            <form method="POST" enctype="multipart/form-data" class="max-w-3xl bg-white p-6 rounded-xl shadow-md border-l-4 border-green-600">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient *</label>
-                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="">Select Patient</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>" data-insurance="<?= $patient['insurance_id'] ?>">
@@ -109,44 +148,44 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="insurance_id">Insurance Policy *</label>
-                        <select name="insurance_id" id="insurance_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="insurance_id" id="insurance_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="">Select Insurance Policy</option>
                         </select>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="procedure_date">Procedure Date *</label>
-                        <input type="date" name="procedure_date" id="procedure_date" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="date" name="procedure_date" id="procedure_date" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="procedure_code">Procedure Code *</label>
-                        <input type="text" name="procedure_code" id="procedure_code" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" name="procedure_code" id="procedure_code" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="procedure_description">Procedure Description *</label>
-                        <textarea name="procedure_description" id="procedure_description" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                        <textarea name="procedure_description" id="procedure_description" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required></textarea>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="fee">Fee ($) *</label>
-                        <input type="number" step="0.01" name="fee" id="fee" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="number" step="0.01" name="fee" id="fee" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="document">Claim Form (Optional)</label>
-                        <input type="file" name="document" id="document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="file" name="document" id="document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                         <p class="text-xs text-gray-500 mt-1">Allowed file types: PDF, JPG, PNG (Max 5MB)</p>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="notes">Notes</label>
-                        <textarea name="notes" id="notes" rows="2" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        <textarea name="notes" id="notes" rows="2" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
                     </div>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
                     <i class="fas fa-paper-plane mr-2"></i> Submit Claim
                 </button>
             </form>

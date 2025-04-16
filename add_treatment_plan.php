@@ -98,6 +98,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Add Treatment Plan - Toothly</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -105,9 +115,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Add Treatment Plan</h1>
-                <a href="treatment_plans.php" class="text-blue-600 hover:text-blue-800 font-medium">
-                    <i class="fas fa-arrow-left mr-1"></i> Back to Treatment Plans
+                <h1 class="text-2xl font-bold text-green-900">Add Treatment Plan</h1>
+                <a href="treatment_plans.php" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Treatment Plans
                 </a>
             </div>
             
@@ -121,7 +131,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient *</label>
-                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="">Select Patient</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>" <?= isset($_POST['patient_id']) && $_POST['patient_id'] == $patient['id'] ? 'selected' : '' ?>>
@@ -133,7 +143,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment_id">Linked Appointment</label>
-                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                             <option value="">Select Appointment (Optional)</option>
                             <?php 
                             $appointments->data_seek(0); // Reset pointer
@@ -149,17 +159,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="title">Title *</label>
-                        <input type="text" name="title" id="title" value="<?= isset($_POST['title']) ? htmlspecialchars($_POST['title']) : '' ?>" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" name="title" id="title" value="<?= isset($_POST['title']) ? htmlspecialchars($_POST['title']) : '' ?>" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="description">Description</label>
-                        <textarea name="description" id="description" rows="4" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"><?= isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
+                        <textarea name="description" id="description" rows="4" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"><?= isset($_POST['description']) ? htmlspecialchars($_POST['description']) : '' ?></textarea>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="status">Status *</label>
-                        <select name="status" id="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="status" id="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="pending" <?= isset($_POST['status']) && $_POST['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
                             <option value="in_progress" <?= isset($_POST['status']) && $_POST['status'] == 'in_progress' ? 'selected' : '' ?>>In Progress</option>
                             <option value="completed" <?= isset($_POST['status']) && $_POST['status'] == 'completed' ? 'selected' : '' ?>>Completed</option>
@@ -169,12 +179,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="document">Initial Document (Optional)</label>
-                        <input type="file" name="document" id="document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <div class="relative">
+                            <input type="file" name="document" id="document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 opacity-0 absolute z-10">
+                            <div class="relative z-0 bg-white border border-gray-300 rounded-lg px-3 py-2 flex items-center justify-between">
+                                <span class="text-gray-500 truncate">Choose file...</span>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Browse</span>
+                            </div>
+                        </div>
                         <p class="text-xs text-gray-500 mt-1">Allowed file types: PDF, JPG, PNG (Max 5MB)</p>
                     </div>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6 flex items-center justify-center">
                     <i class="fas fa-save mr-2"></i> Create Treatment Plan
                 </button>
             </form>
@@ -209,6 +225,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             if(patientSelect.value) {
                 patientSelect.dispatchEvent(new Event('change'));
             }
+
+            // File input display
+            const fileInput = document.getElementById('document');
+            const fileDisplay = fileInput.nextElementSibling.querySelector('span:first-child');
+            
+            fileInput.addEventListener('change', function() {
+                if(this.files.length > 0) {
+                    fileDisplay.textContent = this.files[0].name;
+                    fileDisplay.classList.remove('text-gray-500');
+                    fileDisplay.classList.add('text-gray-800');
+                } else {
+                    fileDisplay.textContent = 'Choose file...';
+                    fileDisplay.classList.remove('text-gray-800');
+                    fileDisplay.classList.add('text-gray-500');
+                }
+            });
         });
     </script>
 </body>

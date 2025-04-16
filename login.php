@@ -11,6 +11,7 @@ if(isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Login - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -120,10 +121,10 @@ if(isset($_SESSION['user'])) {
                 
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                        <!-- <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"> -->
+                        <!-- <label for="remember-me" class="ml-2 block text-sm text-gray-700">
                             Remember me
-                        </label>
+                        </label> -->
                     </div>
                     <!-- <div class="text-sm">
                         <a href="forgot-password.php" class="font-medium text-green-600 hover:text-green-500">

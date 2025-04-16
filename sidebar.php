@@ -3,6 +3,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<link rel="icon" type="image/png" href="images/teeth.png">
+
 <style>
     .swal2-popup {
         font-family: 'Inter', sans-serif;

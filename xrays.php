@@ -72,8 +72,48 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>X-Ray Records - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+    </style>
+    <style>
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .file-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-right: 12px;
+        }
+        .pdf-icon {
+            background-color: #FEE2E2;
+            color: #DC2626;
+        }
+        .image-icon {
+            background-color: #E0F2FE;
+            color: #0369A1;
+        }
+        .default-icon {
+            background-color: #ECFDF5;
+            color: #059669;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -81,8 +121,8 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">X-Ray Records</h1>
-                <a href="add_xray.php" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
+                <h1 class="text-2xl font-bold text-green-900">X-Ray Records</h1>
+                <a href="add_xray.php" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
                     <i class="fas fa-plus mr-2"></i> New X-Ray
                 </a>
             </div>
@@ -101,11 +141,11 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
             
             <!-- Filters -->
             <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-                <h2 class="text-lg font-semibold text-blue-800 mb-4">Filters</h2>
+                <h2 class="text-lg font-semibold text-green-900 mb-4">Filters</h2>
                 <form method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient">Patient</label>
-                        <select name="patient" id="patient" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="patient" id="patient" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ">
                             <option value="">All Patients</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>" <?= $filter_patient == $patient['id'] ? 'selected' : '' ?>>
@@ -117,7 +157,7 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
                     
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="treatment">Treatment Plan</label>
-                        <select name="treatment" id="treatment" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="treatment" id="treatment" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ">
                             <option value="">All Treatment Plans</option>
                             <?php while($plan = $treatment_plans->fetch_assoc()): ?>
                             <option value="<?= $plan['id'] ?>" <?= $filter_treatment == $plan['id'] ? 'selected' : '' ?>>
@@ -129,7 +169,7 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
                     
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment">Appointment</label>
-                        <select name="appointment" id="appointment" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="appointment" id="appointment" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ">
                             <option value="">All Appointments</option>
                             <?php while($appointment = $appointments->fetch_assoc()): ?>
                             <option value="<?= $appointment['id'] ?>" <?= $filter_appointment == $appointment['id'] ? 'selected' : '' ?>>
@@ -140,7 +180,7 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
                     </div>
                     
                     <div class="md:col-span-3 flex space-x-3">
-                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
                             Apply Filters
                         </button>
                         <a href="xrays.php" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg shadow transition">
@@ -154,19 +194,19 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
             <div class="bg-white rounded-xl shadow-md overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-blue-50">
+                        <thead class="bg-green-50">
                             <tr>
-                                <th class="p-3 text-left text-blue-800">Patient</th>
-                                <th class="p-3 text-left text-blue-800">Title</th>
-                                <th class="p-3 text-left text-blue-800">Date Taken</th>
-                                <th class="p-3 text-left text-blue-800">Linked To</th>
-                                <th class="p-3 text-left text-blue-800">Actions</th>
+                                <th class="p-3 text-left text-green-900">Patient</th>
+                                <th class="p-3 text-left text-green-900">Title</th>
+                                <th class="p-3 text-left text-green-900">Date Taken</th>
+                                <th class="p-3 text-left text-green-900">Linked To</th>
+                                <th class="p-3 text-left text-green-900">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <?php if($xrays->num_rows > 0): ?>
                                 <?php while($xray = $xrays->fetch_assoc()): ?>
-                                <tr class="hover:bg-blue-50">
+                                <tr class="hover:bg-green-50 transition">
                                     <td class="p-3"><?= htmlspecialchars($xray['patient_name']) ?></td>
                                     <td class="p-3"><?= htmlspecialchars($xray['title']) ?></td>
                                     <td class="p-3"><?= date('m/d/Y', strtotime($xray['taken_date'])) ?></td>
@@ -180,15 +220,17 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
                                         <?php endif; ?>
                                     </td>
                                     <td class="p-3">
-                                        <a href="view_xray.php?id=<?= $xray['id'] ?>" class="text-blue-600 hover:text-blue-800 mr-2">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <a href="edit_xray.php?id=<?= $xray['id'] ?>" class="text-yellow-600 hover:text-yellow-800 mr-2">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="delete_xray.php?id=<?= $xray['id'] ?>" class="text-red-600 hover:text-red-800 mr-2 delete-btn" data-name="X-ray record">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        <div class="flex space-x-2">
+                                            <a href="view_xray.php?id=<?= $xray['id'] ?>" class="text-green-600 hover:text-green-800 px-2 py-1 rounded transition" title="View">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="edit_xray.php?id=<?= $xray['id'] ?>" class="text-yellow-600 hover:text-yellow-800 px-2 py-1 rounded transition" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="delete_xray.php?id=<?= $xray['id'] ?>" class="text-red-600 hover:text-red-800 px-2 py-1 rounded transition delete-btn" title="Delete" data-name="X-ray record">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php endwhile; ?>
@@ -204,36 +246,37 @@ $treatment_plans = $conn->query("SELECT tp.id, tp.title, p.name as patient_name
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle all delete buttons
-    document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const itemName = this.getAttribute('data-name');
-            const deleteUrl = this.getAttribute('href');
-            
-            Swal.fire({
-                title: `Delete ${itemName}?`,
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#2563eb', // Your blue color
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel',
-                customClass: {
-                    popup: 'shadow-lg rounded-xl'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = deleteUrl;
-                }
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle all delete buttons
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const itemName = this.getAttribute('data-name');
+                const deleteUrl = this.getAttribute('href');
+                
+                Swal.fire({
+                    title: `Delete ${itemName}?`,
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#2E7D32',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel',
+                    customClass: {
+                        popup: 'shadow-lg rounded-xl'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = deleteUrl;
+                    }
+                });
             });
         });
     });
-});
-</script>
+    </script>
 </body>
 </html>
 <?php $conn->close(); ?>

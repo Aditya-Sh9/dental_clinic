@@ -65,8 +65,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Treatment Plan - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+    </style>
+    <style>
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -74,9 +92,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Edit Treatment Plan</h1>
-                <a href="view_treatment_plan.php?id=<?= $treatment_plan_id ?>" class="text-blue-600 hover:text-blue-800 font-medium">
-                    <i class="fas fa-arrow-left mr-1"></i> Back to Plan
+                <h1 class="text-2xl font-bold text-green-900">Edit Treatment Plan</h1>
+                <a href="view_treatment_plan.php?id=<?= $treatment_plan_id ?>" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Plan
                 </a>
             </div>
             
@@ -90,7 +108,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient *</label>
-                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 " required>
                             <option value="">Select Patient</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>" <?= $patient['id'] == $treatment_plan['patient_id'] ? 'selected' : '' ?>>
@@ -102,7 +120,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment_id">Linked Appointment</label>
-                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ">
                             <option value="">Select Appointment (Optional)</option>
                             <?php while($appointment = $appointments->fetch_assoc()): ?>
                             <option value="<?= $appointment['id'] ?>" <?= $appointment['id'] == $treatment_plan['appointment_id'] ? 'selected' : '' ?>>
@@ -115,19 +133,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="title">Title *</label>
                         <input type="text" name="title" id="title" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
                                value="<?= htmlspecialchars($treatment_plan['title']) ?>" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="description">Description</label>
                         <textarea name="description" id="description" rows="4" 
-                                  class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"><?= htmlspecialchars($treatment_plan['description']) ?></textarea>
+                                  class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"><?= htmlspecialchars($treatment_plan['description']) ?></textarea>
                     </div>
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="status">Status *</label>
-                        <select name="status" id="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="status" id="status" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="pending" <?= $treatment_plan['status'] == 'pending' ? 'selected' : '' ?>>Pending</option>
                             <option value="in_progress" <?= $treatment_plan['status'] == 'in_progress' ? 'selected' : '' ?>>In Progress</option>
                             <option value="completed" <?= $treatment_plan['status'] == 'completed' ? 'selected' : '' ?>>Completed</option>
@@ -136,7 +154,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6 flex items-center justify-center">
                     <i class="fas fa-save mr-2"></i> Update Treatment Plan
                 </button>
             </form>
@@ -161,6 +179,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 Array.from(appointmentSelect.options).forEach(option => {
                     option.style.display = '';
                 });
+            }
+        });
+
+        // Initialize the dropdown based on current selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const patientSelect = document.getElementById('patient_id');
+            if(patientSelect.value) {
+                patientSelect.dispatchEvent(new Event('change'));
             }
         });
     </script>

@@ -101,8 +101,43 @@ function getUploadError($error_code) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Document - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
+    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom green shades */
+        .bg-green-100 {
+            background-color: #E8F5E9;
+        }
+        .text-green-800 {
+            color: #2E7D32;
+        }
+        .border-green-600 {
+            border-color: #4CAF50;
+        }
+        .text-green-600 {
+            color: #4CAF50;
+        }
+        .bg-green-600 {
+            background-color: #4CAF50;
+        }
+        .bg-green-700 {
+            background-color: #2E7D32;
+        }
+        .text-green-900 {
+            color: #1B5E20;
+        }
+        .text-green-200 {
+            color: #C8E6C9;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -110,14 +145,14 @@ function getUploadError($error_code) {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Upload Insurance Document</h1>
-                <a href="view_insurance.php?id=<?= $insurance_id ?>" class="text-blue-600 hover:text-blue-800 font-medium">
+                <h1 class="text-2xl font-bold text-green-900">Upload Insurance Document</h1>
+                <a href="view_insurance.php?id=<?= $insurance_id ?>" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                     <i class="fas fa-arrow-left mr-1"></i> Back to Insurance
                 </a>
             </div>
             
-            <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-                <h2 class="text-lg font-semibold text-blue-800 mb-2">Insurance Policy</h2>
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 border-l-4 border-green-600">
+                <h2 class="text-lg font-semibold text-green-900 mb-2">Insurance Policy</h2>
                 <p class="text-gray-700"><span class="font-medium">Patient:</span> <?= htmlspecialchars($insurance['patient_name']) ?></p>
                 <p class="text-gray-700"><span class="font-medium">Policy #:</span> <?= htmlspecialchars($insurance['policy_number']) ?></p>
             </div>
@@ -128,10 +163,10 @@ function getUploadError($error_code) {
                 </div>
             <?php endif; ?>
             
-            <form method="POST" enctype="multipart/form-data" class="max-w-md bg-white p-6 rounded-xl shadow-md">
+            <form method="POST" enctype="multipart/form-data" class="max-w-md bg-white p-6 rounded-xl shadow-md border-l-4 border-green-600">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="document_type">Document Type *</label>
-                    <select name="document_type" id="document_type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    <select name="document_type" id="document_type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                         <option value="">Select Type</option>
                         <option value="insurance_card">Insurance Card</option>
                         <option value="claim_form">Claim Form</option>
@@ -142,11 +177,11 @@ function getUploadError($error_code) {
                 
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-medium mb-2" for="document">Document *</label>
-                    <input type="file" name="document" id="document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    <input type="file" name="document" id="document" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     <p class="text-xs text-gray-500 mt-1">Allowed file types: PDF, JPG, PNG (Max 5MB)</p>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition">
                     <i class="fas fa-upload mr-2"></i> Upload Document
                 </button>
             </form>

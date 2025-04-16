@@ -137,10 +137,41 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit X-Ray Record - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.css">
+    <style>
+        .dropzone {
+            border: 2px dashed #4CAF50;
+            background: #E8F5E9;
+        }
+        .dropzone .dz-message {
+            color: #2E7D32;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(46, 125, 50, 0.7);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(46, 125, 50, 0.9);
+        }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -148,8 +179,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Edit X-Ray Record</h1>
-                <a href="xrays.php" class="text-blue-600 hover:text-blue-800 font-medium">
+                <h1 class="text-2xl font-bold text-green-900">Edit X-Ray Record</h1>
+                <a href="xrays.php" class="text-green-600 hover:text-green-800 font-medium flex items-center">
                     <i class="fas fa-arrow-left mr-1"></i> Back to X-Rays
                 </a>
             </div>
@@ -164,7 +195,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient *</label>
-                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                             <option value="">Select Patient</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>" <?= $xray['patient_id'] == $patient['id'] ? 'selected' : '' ?>>
@@ -176,13 +207,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment_id">Linked Appointment</label>
-                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                             <option value="">Select Appointment (Optional)</option>
                             <?php 
-                            // Check if appointments exist and have rows
                             if ($appointments && $appointments->num_rows > 0) {
                                 while($appointment = $appointments->fetch_assoc()): 
-                                    // Safely get values with null checks
                                     $selected = (isset($xray['appointment_id']) && $xray['appointment_id'] == $appointment['id']) ? 'selected' : '';
                                     $patientName = isset($appointment['patient_name']) ? htmlspecialchars($appointment['patient_name']) : 'Unknown Patient';
                                     $appointmentDate = isset($appointment['appointment_date']) ? date('m/d/Y', strtotime($appointment['appointment_date'])) : 'Unknown Date';
@@ -196,7 +225,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <?php 
                                 endwhile;
                             } else {
-                                // Show message if no appointments available
                                 echo '<option value="" disabled>No appointments available</option>';
                             }
                             ?>
@@ -205,7 +233,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="treatment_plan_id">Linked Treatment Plan</label>
-                        <select name="treatment_plan_id" id="treatment_plan_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="treatment_plan_id" id="treatment_plan_id" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
                             <option value="">Select Treatment Plan (Optional)</option>
                             <?php while($plan = $treatment_plans->fetch_assoc()): ?>
                             <option value="<?= $plan['id'] ?>" 
@@ -221,33 +249,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="taken_date">Date Taken *</label>
                         <input type="date" name="taken_date" id="taken_date" 
                                value="<?= date('Y-m-d', strtotime($xray['taken_date'])) ?>" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="title">Title *</label>
                         <input type="text" name="title" id="title" 
                                value="<?= htmlspecialchars($xray['title']) ?>" 
-                               class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="description">Description</label>
-                        <textarea name="description" id="description" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"><?= htmlspecialchars($xray['description']) ?></textarea>
+                        <textarea name="description" id="description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"><?= htmlspecialchars($xray['description']) ?></textarea>
                     </div>
                 </div>
                 
                 <!-- Existing X-Ray Images -->
-                <div class="mt-8 border-t pt-6">
-                    <h2 class="text-xl font-semibold text-blue-800 mb-4">Existing Images</h2>
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <h2 class="text-xl font-semibold text-green-900 mb-4">Existing Images</h2>
                     
                     <?php if($images->num_rows > 0): ?>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             <?php while($image = $images->fetch_assoc()): ?>
-                            <div class="border rounded-lg p-4 bg-gray-50 flex items-start">
+                            <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 flex items-start">
                                 <div class="flex-1">
                                     <div class="flex items-center mb-2">
-                                        <a href="<?= $image['file_path'] ?>" target="_blank" class="text-blue-600 hover:text-blue-800 mr-3">
+                                        <a href="<?= $image['file_path'] ?>" target="_blank" class="text-green-600 hover:text-green-800 mr-3">
                                             <i class="fas fa-eye"></i> View
                                         </a>
                                         <span class="text-sm text-gray-500"><?= $image['file_name'] ?></span>
@@ -257,7 +285,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <?php endif; ?>
                                 </div>
                                 <div class="flex items-center">
-                                    <input type="checkbox" name="delete_images[]" value="<?= $image['id'] ?>" id="delete_<?= $image['id'] ?>" class="mr-2">
+                                    <input type="checkbox" name="delete_images[]" value="<?= $image['id'] ?>" id="delete_<?= $image['id'] ?>" class="mr-2 rounded border-gray-300 text-green-600 focus:ring-green-500">
                                     <label for="delete_<?= $image['id'] ?>" class="text-red-600 hover:text-red-800 cursor-pointer">
                                         <i class="fas fa-trash"></i>
                                     </label>
@@ -271,8 +299,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
                 
                 <!-- New X-Ray Images Upload -->
-                <div class="mt-8 border-t pt-6">
-                    <h2 class="text-xl font-semibold text-blue-800 mb-4">Add New X-Ray Images</h2>
+                <div class="mt-8 border-t border-gray-200 pt-6">
+                    <h2 class="text-xl font-semibold text-green-900 mb-4">Add New X-Ray Images</h2>
                     
                     <div id="xray-dropzone" class="dropzone border-2 border-dashed border-gray-300 rounded-lg p-6 mb-4">
                         <div class="dz-message text-center text-gray-500">
@@ -283,12 +311,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     
                     <div id="xray-preview" class="hidden">
-                        <h3 class="text-lg font-medium text-blue-800 mb-3">Uploaded Images</h3>
+                        <h3 class="text-lg font-medium text-green-900 mb-3">Uploaded Images</h3>
                         <div id="xray-files" class="space-y-4"></div>
                     </div>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
                     <i class="fas fa-save mr-2"></i> Update X-Ray Record
                 </button>
             </form>
@@ -317,12 +345,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             init: function() {
                 this.on("addedfile", function(file) {
-                    // Show preview section when files are added
                     document.getElementById('xray-preview').classList.remove('hidden');
                     
-                    // Create preview element with note field
                     const preview = document.createElement('div');
-                    preview.className = 'border rounded-lg p-4 bg-gray-50';
+                    preview.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50';
                     preview.innerHTML = `
                         <div class="flex items-start mb-3">
                             <div class="flex-1">
@@ -335,7 +361,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="mb-2">
                             <label class="block text-gray-700 text-sm font-medium mb-1">Notes</label>
-                            <textarea name="image_notes[]" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                            <textarea name="image_notes[]" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" rows="2"></textarea>
                             <input type="hidden" name="xray_images[]" value="${file.name}">
                         </div>
                     `;
@@ -352,13 +378,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         });
         
-        // Update dropdowns when patient is selected
         document.getElementById('patient_id').addEventListener('change', function() {
             const patientId = this.value;
             const appointmentSelect = document.getElementById('appointment_id');
             const treatmentPlanSelect = document.getElementById('treatment_plan_id');
             
-            // Filter appointments
             Array.from(appointmentSelect.options).forEach(option => {
                 if(option.value !== '') {
                     const optionPatientId = option.getAttribute('data-patient-id');
@@ -366,7 +390,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             });
             
-            // Filter treatment plans
             Array.from(treatmentPlanSelect.options).forEach(option => {
                 if(option.value !== '') {
                     const optionPatientId = option.getAttribute('data-patient-id');
@@ -375,9 +398,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             });
         });
         
-        // Form submission handler
         document.querySelector('form').addEventListener('submit', function(e) {
-            // Convert Dropzone files to regular file inputs
             if(myDropzone.files.length > 0) {
                 const fileInput = document.createElement('input');
                 fileInput.type = 'file';

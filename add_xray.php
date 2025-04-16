@@ -85,14 +85,63 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Add X-Ray Record - Toothly</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.css">
 
     <style>
-    select option[style*="display: none"] {
-        display: none;
-    }
-</style>
+        . {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+        .dropzone {
+            border: 2px dashed #9CA3AF;
+            border-radius: 0.5rem;
+            background: #F9FAFB;
+            transition: all 0.3s ease;
+        }
+        .dropzone:hover {
+            border-color: #4B5563;
+            background: #F3F4F6;
+        }
+        .dz-message {
+            color: #6B7280;
+            font-size: 1.125rem;
+        }
+        .dz-preview {
+            border-radius: 0.5rem;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .dz-success-mark, .dz-error-mark {
+            display: none;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(46, 125, 50, 0.7);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(46, 125, 50, 0.9);
+        }
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex min-h-screen">
@@ -100,9 +149,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Add X-Ray Record</h1>
-                <a href="xrays.php" class="text-blue-600 hover:text-blue-800 font-medium">
-                    <i class="fas fa-arrow-left mr-1"></i> Back to X-Rays
+                <h1 class="text-2xl font-bold text-green-900">Add X-Ray Record</h1>
+                <a href="xrays.php" class="text-green-600 hover:text-green-800 font-medium flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to X-Rays
                 </a>
             </div>
             
@@ -116,7 +165,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="patient_id">Patient *</label>
-                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <select name="patient_id" id="patient_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 " required>
                             <option value="">Select Patient</option>
                             <?php while($patient = $patients->fetch_assoc()): ?>
                             <option value="<?= $patient['id'] ?>"><?= htmlspecialchars($patient['name']) ?></option>
@@ -126,7 +175,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="appointment_id">Linked Appointment</label>
-                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="appointment_id" id="appointment_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ">
                             <option value="">Select Appointment (Optional)</option>
                             <?php 
                             // Reset the pointer to the beginning of the result set
@@ -142,7 +191,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="treatment_plan_id">Linked Treatment Plan</label>
-                        <select name="treatment_plan_id" id="treatment_plan_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <select name="treatment_plan_id" id="treatment_plan_id" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 ">
                             <option value="">Select Treatment Plan (Optional)</option>
                             <?php while($plan = $treatment_plans->fetch_assoc()): ?>
                             <option value="<?= $plan['id'] ?>" data-patient-id="<?= $plan['patient_id'] ?>">
@@ -154,23 +203,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     <div class="mb-4">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="taken_date">Date Taken *</label>
-                        <input type="date" name="taken_date" id="taken_date" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="date" name="taken_date" id="taken_date" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="title">Title *</label>
-                        <input type="text" name="title" id="title" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="text" name="title" id="title" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
                     </div>
                     
                     <div class="mb-4 md:col-span-2">
                         <label class="block text-gray-700 text-sm font-medium mb-2" for="description">Description</label>
-                        <textarea name="description" id="description" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        <textarea name="description" id="description" rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
                     </div>
                 </div>
                 
                 <!-- X-Ray Images Upload -->
                 <div class="mt-8 border-t pt-6">
-                    <h2 class="text-xl font-semibold text-blue-800 mb-4">X-Ray Images</h2>
+                    <h2 class="text-xl font-semibold text-green-900 mb-4">X-Ray Images</h2>
                     
                     <div id="xray-dropzone" class="dropzone border-2 border-dashed border-gray-300 rounded-lg p-6 mb-4">
                         <div class="dz-message text-center text-gray-500">
@@ -181,18 +230,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </div>
                     
                     <div id="xray-preview" class="hidden">
-                        <h3 class="text-lg font-medium text-blue-800 mb-3">Uploaded Images</h3>
+                        <h3 class="text-lg font-medium text-green-900 mb-3">Uploaded Images</h3>
                         <div id="xray-files" class="space-y-4"></div>
                     </div>
                 </div>
                 
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6">
+                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition mt-6 flex items-center justify-center">
                     <i class="fas fa-save mr-2"></i> Save X-Ray Record
                 </button>
             </form>
         </div>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Initialize Dropzone
         Dropzone.autoDiscover = false;
@@ -233,7 +283,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="mb-2">
                             <label class="block text-gray-700 text-sm font-medium mb-1">Notes</label>
-                            <textarea name="image_notes[]" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" rows="2"></textarea>
+                            <textarea name="image_notes[]" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" rows="2"></textarea>
                             <input type="hidden" name="xray_images[]" value="${file.name}">
                         </div>
                     `;
@@ -251,60 +301,59 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
         
         // Update dropdowns when patient is selected
-        // Update dropdowns when patient is selected
-document.getElementById('patient_id').addEventListener('change', function() {
-    const patientId = this.value;
-    const appointmentSelect = document.getElementById('appointment_id');
-    const treatmentPlanSelect = document.getElementById('treatment_plan_id');
-    
-    // Filter appointments
-    Array.from(appointmentSelect.options).forEach(option => {
-        if (option.value === '') {
-            // Keep the "Select Appointment" option visible
-            option.style.display = '';
-            return;
-        }
-        
-        const optionPatientId = option.getAttribute('data-patient-id');
-        if (optionPatientId === patientId) {
-            option.style.display = '';
-        } else {
-            option.style.display = 'none';
-            // Unselect if previously selected but now hidden
-            if (option.selected) {
+        document.getElementById('patient_id').addEventListener('change', function() {
+            const patientId = this.value;
+            const appointmentSelect = document.getElementById('appointment_id');
+            const treatmentPlanSelect = document.getElementById('treatment_plan_id');
+            
+            // Filter appointments
+            Array.from(appointmentSelect.options).forEach(option => {
+                if (option.value === '') {
+                    // Keep the "Select Appointment" option visible
+                    option.style.display = '';
+                    return;
+                }
+                
+                const optionPatientId = option.getAttribute('data-patient-id');
+                if (optionPatientId === patientId) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                    // Unselect if previously selected but now hidden
+                    if (option.selected) {
+                        appointmentSelect.value = '';
+                    }
+                }
+            });
+            
+            // Filter treatment plans
+            Array.from(treatmentPlanSelect.options).forEach(option => {
+                if (option.value === '') {
+                    // Keep the "Select Treatment Plan" option visible
+                    option.style.display = '';
+                    return;
+                }
+                
+                const optionPatientId = option.getAttribute('data-patient-id');
+                if (optionPatientId === patientId) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                    // Unselect if previously selected but now hidden
+                    if (option.selected) {
+                        treatmentPlanSelect.value = '';
+                    }
+                }
+            });
+            
+            // Reset values when changing patient if no matching options
+            if (appointmentSelect.querySelector('option:not([style*="display: none"])').value === '') {
                 appointmentSelect.value = '';
             }
-        }
-    });
-    
-    // Filter treatment plans
-    Array.from(treatmentPlanSelect.options).forEach(option => {
-        if (option.value === '') {
-            // Keep the "Select Treatment Plan" option visible
-            option.style.display = '';
-            return;
-        }
-        
-        const optionPatientId = option.getAttribute('data-patient-id');
-        if (optionPatientId === patientId) {
-            option.style.display = '';
-        } else {
-            option.style.display = 'none';
-            // Unselect if previously selected but now hidden
-            if (option.selected) {
+            if (treatmentPlanSelect.querySelector('option:not([style*="display: none"])').value === '') {
                 treatmentPlanSelect.value = '';
             }
-        }
-    });
-    
-    // Reset values when changing patient if no matching options
-    if (appointmentSelect.querySelector('option:not([style*="display: none"])').value === '') {
-        appointmentSelect.value = '';
-    }
-    if (treatmentPlanSelect.querySelector('option:not([style*="display: none"])').value === '') {
-        treatmentPlanSelect.value = '';
-    }
-});
+        });
         
         // Form submission handler
         document.querySelector('form').addEventListener('submit', function(e) {

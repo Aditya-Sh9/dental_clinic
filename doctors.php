@@ -27,17 +27,50 @@ if(isset($_GET['delete_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctors - Toothly</title>
+    <link rel="icon" type="image/png" href="images/teeth.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom green shades */
+        .bg-green-100 {
+            background-color: #E8F5E9;
+        }
+        .text-green-800 {
+            color: #2E7D32;
+        }
+        .border-green-600 {
+            border-color: #4CAF50;
+        }
+        .text-green-600 {
+            color: #4CAF50;
+        }
+        /* .bg-green-600 {
+            background-color: #4CAF50;
+        } */
+        .bg-green-700 {
+            background-color: #2E7D32;
+        }
+        .text-green-900 {
+            color: #1B5E20;
+        }
+        .text-green-200 {
+            color: #C8E6C9;
+        }
+        
         .swal2-popup {
             font-family: 'Inter', sans-serif;
             border-radius: 0.75rem !important;
         }
         .swal2-confirm {
-            background-color: #2563eb !important;
+            background-color: #2E7D32 !important;
             border-radius: 0.5rem !important;
         }
         .swal2-cancel {
@@ -51,8 +84,8 @@ if(isset($_GET['delete_id'])) {
         
         <div class="flex-1 p-8">
             <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-bold text-blue-800">Doctors Management</h1>
-                <a href="add_doctor.php" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center">
+                <h1 class="text-2xl font-bold text-green-900">Doctors Management</h1>
+                <a href="add_doctor.php" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg shadow transition flex items-center !important">
                     <i class="fas fa-plus mr-2"></i> Add Doctor
                 </a>
             </div>
@@ -69,24 +102,24 @@ if(isset($_GET['delete_id'])) {
                 </div>
             <?php endif; ?>
             
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden border-l-4 border-green-600">
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="bg-blue-50">
+                        <thead class="bg-green-50">
                             <tr>
-                                <th class="p-3 text-left text-blue-800">Doctor</th>
-                                <th class="p-3 text-left text-blue-800">Specialty</th>
-                                <th class="p-3 text-left text-blue-800">Color</th>
-                                <th class="p-3 text-left text-blue-800">Actions</th>
+                                <th class="p-3 text-left text-green-900">Doctor</th>
+                                <th class="p-3 text-left text-green-900">Specialty</th>
+                                <th class="p-3 text-left text-green-900">Color</th>
+                                <th class="p-3 text-left text-green-900">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
                             <?php while($doctor = $doctors->fetch_assoc()): ?>
-                            <tr class="hover:bg-blue-50">
+                            <tr class="hover:bg-green-50">
                                 <td class="p-3">
                                     <div class="flex items-center">
                                         <div class="h-10 w-10 rounded-full flex items-center justify-center text-white mr-3" 
-                                             style="background-color: <?= $doctor['color'] ?: '#3b82f6' ?>">
+                                             style="background-color: <?= $doctor['color'] ?: '#4CAF50' ?>">
                                             <?= substr($doctor['name'], 0, 1) ?>
                                         </div>
                                         <span class="font-medium"><?= htmlspecialchars($doctor['name']) ?></span>
@@ -94,16 +127,10 @@ if(isset($_GET['delete_id'])) {
                                 </td>
                                 <td class="p-3"><?= htmlspecialchars($doctor['specialty']) ?></td>
                                 <td class="p-3">
-                                    <div class="h-5 w-5 rounded-full" style="background-color: <?= $doctor['color'] ?: '#3b82f6' ?>"></div>
+                                    <div class="h-5 w-5 rounded-full" style="background-color: <?= $doctor['color'] ?: '#4CAF50' ?>"></div>
                                 </td>
                                 <td class="p-3">
                                     <div class="flex space-x-2">
-                                        <!-- <a href="view_doctor.php?id=<?= $doctor['id'] ?>" class="text-blue-600 hover:text-blue-800 px-2 py-1 rounded transition">
-                                            <i class="fas fa-eye"></i>
-                                        </a> -->
-                                        <!-- <a href="edit_doctor.php?id=<?= $doctor['id'] ?>" class="text-yellow-600 hover:text-yellow-800 px-2 py-1 rounded transition">
-                                            <i class="fas fa-edit"></i>
-                                        </a> -->
                                         <a href="doctors.php?delete_id=<?= $doctor['id'] ?>" class="text-red-600 hover:text-red-800 px-2 py-1 rounded transition delete-btn" data-name="<?= htmlspecialchars($doctor['name']) ?>">
                                             <i class="fas fa-trash"></i>
                                         </a>
@@ -134,7 +161,7 @@ if(isset($_GET['delete_id'])) {
                         text: "You won't be able to revert this!",
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#2563eb',
+                        confirmButtonColor: '#2E7D32',
                         cancelButtonColor: '#d33',
                         confirmButtonText: 'Yes, delete it!',
                         cancelButtonText: 'Cancel',
