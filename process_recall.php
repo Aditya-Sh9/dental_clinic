@@ -166,7 +166,6 @@ function sendRecallNotification($recall_id, $conn) {
     <body>
         <h2>Dear {$recall['patient_name']},</h2>
         <p>This is a friendly reminder about your upcoming dental {$recall['recall_type']}.</p>
-        <p><strong>Recall Date:</strong> " . date('F j, Y', strtotime($recall['recall_date'])) . "</p>
         <p><strong>Due Date:</strong> " . date('F j, Y', strtotime($recall['due_date'])) . "</p>
         <p><strong>Recall Type:</strong> {$recall['recall_type']}</p>
         " . ($recall['notes'] ? "<p><strong>Notes:</strong> {$recall['notes']}</p>" : "") . "
